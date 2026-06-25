@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>حاسبة احتمالات مصر في كأس العالم 2026</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__content">
+      <p class="eyebrow">FIFA World Cup 2026</p>
+      <h1>حاسبة طريق مصر في دور الـ32</h1>
+      <p>
+        تحدّث النتائج أونلاين قدر الإمكان، تحسب ترتيب المجموعات، أفضل الثوالث،
+        وتحدد خصم مصر حسب جدول Annex C الرسمي.
+      </p>
+      <div class="actions">
+        <button id="refreshBtn" class="primary">تحديث النتائج الآن</button>
+        <button id="recalcBtn" class="secondary">إعادة الحساب</button>
+        <button id="resetBtn" class="ghost">رجوع للبيانات الأصلية</button>
+      </div>
+      <div id="sourceStatus" class="status">جاهز.</div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="card big" id="egyptCard">
+      <div class="card__header">
+        <h2>نتيجة مصر الحالية</h2>
+        <span id="lastUpdated" class="pill">لم يتم التحديث بعد</span>
+      </div>
+      <div id="egyptSummary" class="summary-grid"></div>
+      <div id="egyptPath" class="path-box"></div>
+    </section>
+
+
+    <section class="card big" id="livePossibilitiesCard">
+      <div class="card__header">
+        <h2>الخصوم المحتملين لمصر الآن</h2>
+        <span id="scenarioMode" class="pill">سيناريوهات مباشرة</span>
+      </div>
+      <p class="hint">
+        هنا الموقع يجرّب نتائج المباريات التي لم تُلعب بعد بناءً على الوضع الحالي،
+        ثم يجمّع كل الطرق الممكنة لمصر: أول/ثاني/ثالث، والخصوم المحتملين.
+      </p>
+      <div class="scenario-controls">
+        <label>عدد السيناريوهات عند وجود مباريات كثيرة:</label>
+        <select id="scenarioSamples">
+          <option value="10000">10,000 سريع</option>
+          <option value="30000" selected>30,000 متوازن</option>
+          <option value="80000">80,000 أدق</option>
+        </select>
+        <button id="simulateBtn" class="secondary">احسب الخصوم المحتملين</button>
+      </div>
+      <div id="possibleOpponents" class="scenario-grid"></div>
+      <div id="scenarioDetails" class="note"></div>
+    </section>
+
+    <section class="card">
+      <h2>أفضل الثوالث</h2>
+      <p class="hint">يتم ترتيب أصحاب المركز الثالث بالنقاط، فارق الأهداف، الأهداف المسجلة. اللعب النظيف وتصنيف FIFA يظهران كتنبيه عند التعادل التام.</p>
+      <div id="thirdsList" class="mini-table"></div>
+    </section>
+
+    <section class="card">
+      <h2>اختبار سريع لسيناريوهات مصر</h2>
+      <p class="hint">استخدمي الأزرار لتغيير مباراة مصر وإيران سريعًا، ثم اضغطي إعادة الحساب.</p>
+      <div class="quick-buttons">
+        <button data-egypt="win">مصر تكسب إيران</button>
+        <button data-egypt="draw">مصر تتعادل</button>
+        <button data-egypt="lose">مصر تخسر</button>
+        <button data-egypt="clear">امسح نتيجة مصر وإيران</button>
+      </div>
+      <div class="manual-third">
+        <h3>حاسبة Annex C يدويًا</h3>
+        <p class="hint">لو عايزة تجربي حروف أفضل 8 ثوالث بنفسك، اكتبيهم مثل: B,D,F,H,I,J,K,L</p>
+        <div class="inline-form">
+          <input id="manualThirdLetters" placeholder="B,D,F,H,I,J,K,L" />
+          <button id="manualThirdBtn">احسب خصم 1G</button>
+        </div>
+        <div id="manualThirdResult" class="note"></div>
+      </div>
+    </section>
+
+    <section class="card big">
+      <div class="card__header">
+        <h2>جدول المجموعات</h2>
+        <span class="pill">بعد إدخال/تحديث النتائج</span>
+      </div>
+      <div id="groupsTables" class="groups-grid"></div>
+    </section>
+
+    <section class="card big">
+      <div class="card__header">
+        <h2>المباريات والنتائج القابلة للتعديل</h2>
+        <span class="pill">التوقعات اليدوية تؤثر في الحساب</span>
+      </div>
+      <p class="hint">
+        إذا المباراة لم تُلعب بعد، اكتبي نتيجة متوقعة. إذا تركتيها فاضية لن تدخل في الحساب.
+      </p>
+      <div id="matchesEditor" class="matches"></div>
+    </section>
+
+    <section class="card big">
+      <h2>ملاحظات مهمة</h2>
+      <ul class="notes">
+        <li>التحديث الأونلاين يعتمد على ESPN public scoreboard endpoint غير رسمي، لذلك أضفت وضعًا يدويًا احتياطيًا.</li>
+        <li>جدول Annex C يتم تحميله من صفحة ويكيبيديا التي تنقل جدول FIFA. إن فشل التحميل، ستظهر رسالة وتقدري تجربي لاحقًا.</li>
+        <li>عند التعادل الكامل في الترتيب، FIFA تستخدم اللعب النظيف ثم التصنيف؛ الموقع يضع علامة “Tie needs FIFA tiebreakers”.</li>
+        <li>الموقع لا يتنبأ بنتائج مستقبلية وحده؛ هو يحسب السيناريو بناءً على النتائج الفعلية أو التي تدخلينها.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Made for Egypt scenarios 🇪🇬</span>
+    <span>Static site — HTML/CSS/JS only</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
